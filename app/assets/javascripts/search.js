@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("search");
   const suggestionBox = document.getElementById("suggestions");
-  const userIdentifierInput = document.getElementById("userIdentifier"); // Change the variable name
-  const userIdentifier = userIdentifierInput.dataset.identifier; // Retrieve user identifier from the data attribute
 
   let typingTimer;
   const doneTypingInterval = 500; // 500 milliseconds
@@ -23,16 +21,11 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify({
         query: query,
-        userIdentifier: userIdentifier, // Change the parameter name
       }),
     });
 
     // GET request to /get_similar_queries
-    fetch(
-      `/get_similar_queries?query=${encodeURIComponent(
-        query
-      )}&user_identifier=${encodeURIComponent(userIdentifier)}` // Change the parameter name
-    )
+    fetch(`/get_similar_queries?query=${encodeURIComponent(query)}`)
       .then((response) => response.json())
       .then((data) => {
         // Update the suggestion box
