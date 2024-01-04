@@ -13,42 +13,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleSearch() {
     const query = searchInput.value;
-    const userIp = userIpInput.dataset.ip; // Retrieve user's IP from the data attribute
 
-    // POST request to /search
-    fetch("/search", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: query,
-        userIp: userIp,
-      }),
-    });
-
-    // GET request to /get_similar_queries
-    fetch(
-      `/get_similar_queries?query=${encodeURIComponent(
-        query
-      )}&user_ip=${encodeURIComponent(userIpInput.dataset.ip)}`
-    )
+    // Get the client's IP address
+    fetch("https://api.ipify.org?format=json")
       .then((response) => response.json())
       .then((data) => {
-        // Update the suggestion box
-        suggestionBox.innerHTML = "";
-        const ul = document.createElement("ul");
-        data.similar_queries.forEach((suggestion) => {
-          const li = document.createElement("li");
-          li.textContent = suggestion;
-          ul.appendChild(li);
+        const userIp = data.ip; // Retrieve user's IP from the response
+
+        // POST request to /search
+        fetch("/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            query: query,
+            userIp: userIp,
+          }),
         });
-        suggestionBox.appendChild(ul);
-        if (data.similar_queries.length > 0) {
-          suggestionBox.style.setProperty("display", "block", "important");
-        } else {
-          suggestionBox.style.setProperty("display", "none", "important");
-        }
+
+        // GET request to /get_similar_queries
+        fetch(
+          `/get_similar_queries?query=${encodeURIComponent(
+            query
+          )}&user_ip=${encodeURIComponent(userIp)}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // Update the suggestion box
+            suggestionBox.innerHTML = "";
+            const ul = document.createElement("ul");
+            data.similar_queries.forEach((suggestion) => {
+              const li = document.createElement("li");
+              li.textContent = suggestion;
+              ul.appendChild(li);
+            });
+            suggestionBox.appendChild(ul);
+            if (data.similar_queries.length > 0) {
+              suggestionBox.style.setProperty("display", "block", "important");
+            } else {
+              suggestionBox.style.setProperty("display", "none", "important");
+            }
+          });
       });
   }
 });
