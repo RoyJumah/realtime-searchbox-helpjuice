@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("search");
   const suggestionBox = document.getElementById("suggestions");
+  const userIpInput = document.getElementById("userIp");
 
   let typingTimer;
   const doneTypingInterval = 500; // 500 milliseconds
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleSearch() {
     const query = searchInput.value;
+    const userIp = userIpInput.dataset.ip; // Retrieve user's IP from the data attribute
 
     // POST request to /search
     fetch("/search", {
@@ -21,11 +23,16 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify({
         query: query,
+        userIp: userIp,
       }),
     });
 
     // GET request to /get_similar_queries
-    fetch(`/get_similar_queries?query=${encodeURIComponent(query)}`)
+    fetch(
+      `/get_similar_queries?query=${encodeURIComponent(
+        query
+      )}&user_ip=${encodeURIComponent(userIpInput.dataset.ip)}`
+    )
       .then((response) => response.json())
       .then((data) => {
         // Update the suggestion box
