@@ -5,11 +5,23 @@ document.addEventListener("DOMContentLoaded", function () {
   const searchHistoryBody = document.getElementById("search-history-body");
 
   let typingTimer;
+  let historyTimer;
   const doneTypingInterval = 500; // 500 milliseconds
+  const doneHistoryInterval = 1000; // 1 second
 
   searchInput.addEventListener("input", function () {
     clearTimeout(typingTimer);
     typingTimer = setTimeout(handleSearch, doneTypingInterval);
+  });
+
+  searchInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form submission
+      handleSearch();
+    }
+
+    clearTimeout(historyTimer);
+    historyTimer = setTimeout(fetchSearchHistory, doneHistoryInterval);
   });
 
   function handleSearch() {
@@ -26,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         query: query,
         userIp: userIp,
       }),
-    });
+    }).then(() => fetchSearchHistory()); // Fetch the search history after a search
 
     // GET request to /get_similar_queries
     fetch(
