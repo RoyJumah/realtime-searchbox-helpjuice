@@ -191,4 +191,26 @@ describe '#clean_up_incomplete_queries' do
     expect(SearchQuery.find_by(query:'hello world')).not_to be_nil
   end
 end
+
+describe "GET #get_search_history" do
+    let(:user_ip) { '192.168.1.1' }
+    let!(:search_queries) do
+      3.times.map do
+        SearchQuery.create!(user_ip: user_ip, query: "Some query")
+      end
+    end
+
+    before do
+      get :get_search_history, params: { user_ip: user_ip }
+    end
+
+    it "returns http success" do
+      expect(response).to have_http_status(:success)
+    end
+
+    it "returns the correct search history" do
+      returned_search_history = JSON.parse(response.body)['search_history']
+      expect(returned_search_history).to eq(search_queries.map(&:query).reverse)
+    end
+  end
 end

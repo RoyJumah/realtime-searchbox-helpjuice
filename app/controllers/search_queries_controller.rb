@@ -28,6 +28,12 @@ class SearchQueriesController < ApplicationController
     render json: { similar_queries: similar_queries }
   end
 
+  def get_search_history
+    user_ip = params[:user_ip]
+    search_history = SearchQuery.where(user_ip: user_ip).order(created_at: :desc).pluck(:query)
+    render json: { search_history: search_history }
+  end
+
   private
 
   def valid_complete_query?(query)

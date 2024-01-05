@@ -73,3 +73,32 @@ h1 {
   width: 28px;
   height: 28px;
 }
+
+/* search history table */
+#search-history {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#search-history th,
+#search-history td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#search-history th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4caf50;
+  color: white;
+}
+
+#search-history-body {
+  background-color: white;
+}
+
+#search-history-body tr {
+  border-bottom: 1px solid #ddd;
+}

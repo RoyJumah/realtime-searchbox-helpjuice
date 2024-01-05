@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("search");
   const suggestionBox = document.getElementById("suggestions");
   const userIpInput = document.getElementById("userIp");
+  const searchHistoryBody = document.getElementById("search-history-body");
 
   let typingTimer;
   const doneTypingInterval = 500; // 500 milliseconds
@@ -51,4 +52,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
   }
+
+  // getting search history
+  function fetchSearchHistory() {
+    const userIp = userIpInput.dataset.ip; // Retrieve user's IP from the data attribute
+
+    // GET request to /search_queries/history
+    fetch(`/search_queries/history?user_ip=${encodeURIComponent(userIp)}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the search history table
+        searchHistoryBody.innerHTML = ""; // Clear the table body
+        data.search_history.forEach((query) => {
+          const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          td.textContent = query;
+          tr.appendChild(td);
+          searchHistoryBody.appendChild(tr);
+        });
+      });
+  }
+
+  // Fetch the search history when the page loads
+  fetchSearchHistory();
 });
