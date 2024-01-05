@@ -30,5 +30,5 @@ This application allows users to search for an article in the search box, saving
 
   <details>
     <summary><h3> 📷 - Demo Image </h3></summary>
-    <img src="https://github.com/RoyJumah/realtime-searchbox-helpjuice/assets/61903079/1805ca8f-25ab-472f-8149-21a3b13b896d"/>
+    <img src="https://github.com/RoyJumah/realtime-searchbox-helpjuice/assets/61903079/b92dc75e-d35e-4ca6-bae8-0c1b21b35366"/>
   </details>
