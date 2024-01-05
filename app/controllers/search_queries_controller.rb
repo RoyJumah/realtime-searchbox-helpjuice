@@ -3,7 +3,7 @@ class SearchQueriesController < ApplicationController
 
   def create
     query = params[:query]
-    user_ip = request.headers['X-Forwarded-For'] || request.remote_ip
+    user_ip = request.headers['X-Forwarded-For'].to_s.split(',').first || request.remote_ip
     # Clean up incomplete queries before creating a new one
     clean_up_incomplete_queries(user_ip)
     # Find the latest complete search query for the user
@@ -18,7 +18,7 @@ class SearchQueriesController < ApplicationController
   end
   
   def get_similar_queries
-    user_ip = request.headers['X-Forwarded-For'] || request.remote_ip
+    user_ip = request.headers['X-Forwarded-For'].to_s.split(',').first || request.remote_ip
     query = params[:query].to_s.strip.downcase.gsub(' ', '')
     similar_queries = SearchQuery
                     .where(user_ip: user_ip)
