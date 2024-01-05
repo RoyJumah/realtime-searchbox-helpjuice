@@ -1,24 +1,34 @@
-# README
+# 🔎 Realtime-Search Box
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application allows users to search for an article in the search box, saving their searches based on the user's IP address.
 
-Things you may want to cover:
+# 🚀 Features
+- Allows users to search for articles
+- Displays articles searched per user
 
-* Ruby version
+# 🛠 Main Technologies
+- `Ruby on Rails`
+- `JavaScript`
+- `CSS`
+- `RSpec`
 
-* System dependencies
+## 📄 Process
 
-* Configuration
+- I began by listing what methods this application would need to function as expected.
+- Secondly, I created the rails app locally and implemented the methods that I had come up with
+- Next, I prepared the database that was supposed to collect and save the searched articles
+- I later conducted tests to ensure that the application handled the possible search scenarios correctly.
+- Finally, I deployed the application to Render and tested to see if the IP addresses were fetched correctly in production.
 
-* Database creation
+# How it can be improved
 
-* Database initialization
+- The applications may need to be responsive to adhere to both small and large screens
+- Implement caching and other performance optimization techniques to ensure the application loads quickly and provides a smooth user experience.
 
-* How to run the test suite
+## 🐛 Current Bug
+- I don't have any known bugs to report as of this moment.
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  <details>
+    <summary><h3> 📷 - Demo Image </h3></summary>
+    <img src="https://github.com/RoyJumah/realtime-searchbox-helpjuice/assets/61903079/1805ca8f-25ab-472f-8149-21a3b13b896d"/>
+  </details>
